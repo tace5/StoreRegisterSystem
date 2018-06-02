@@ -9,6 +9,11 @@ public class Discount {
         amount = rules.checkDiscountAmount(customer);
     }
 
+    /**
+     * Returns the discount amount
+     *
+     * @return double
+     */
     public double getAmount() {
         return amount;
     }

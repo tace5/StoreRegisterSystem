@@ -15,6 +15,11 @@ public class Receipt {
          this.sale = sale;
     }
 
+    /**
+     * Returns a string for the receipt text
+     *
+     * @return String
+     */
     public String createReceiptString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Sale\n");

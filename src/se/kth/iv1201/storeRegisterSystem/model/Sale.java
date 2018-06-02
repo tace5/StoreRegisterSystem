@@ -5,7 +5,6 @@ import se.kth.iv1201.storeRegisterSystem.integration.Printer;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.BiConsumer;
 
 public class Sale {
     private final double SALES_TAX = 1.257;
@@ -18,6 +17,12 @@ public class Sale {
         itemsList = new HashMap<>();
     }
 
+    /**
+     * Adds an item to the sale
+     *
+     * @param scannedItem ItemDTO
+     * @param quantity quantity
+     */
     public void addItem(ItemDTO scannedItem, int quantity) {
         if(!itemsList.containsKey(scannedItem)) {
             this.itemsList.put(scannedItem, quantity);
@@ -27,10 +32,22 @@ public class Sale {
         this.runningTotal += scannedItem.getPrice() * quantity;
     }
 
+    /**
+     * Adds a discount to the sale
+     *
+     * @param customer CustomerDTO
+     * @param rules DiscountRulesRegistry
+     */
     public void requestDiscount(CustomerDTO customer, DiscountRulesRegistry rules) {
         discount = new Discount(customer, rules);
     }
 
+    /**
+     * Updates the paidAmount field and checks if the payment is enough. Returns true if it is and false otherwise.
+     *
+     * @param paidAmount
+     * @return boolean
+     */
     public boolean pay(double paidAmount) {
         if (paidAmount < runningTotal) {
             return false;
@@ -40,6 +57,9 @@ public class Sale {
         }
     }
 
+    /**
+     * Updates the running total by going through the items list and checking the price and quantity of each item
+     */
     public void updateRunningTotal() {
         double updatedTotal = 0;
 
@@ -57,27 +77,57 @@ public class Sale {
         runningTotal = updatedTotal;
     }
 
+    /**
+     * Prints a receipt for the sale
+     *
+     * @param printer Printer
+     */
     public void printReceipt(Printer printer) {
         Receipt receipt = new Receipt(this);
         printer.printReceipt(receipt);
     }
 
+    /**
+     * Returns the item list
+     *
+     * @return HashMap<ItemDTO, Integer>
+     */
     public HashMap<ItemDTO, Integer> getItemList() {
         return itemsList;
     }
 
+    /**
+     * Returns the running total
+     *
+     * @return double
+     */
     public double getRunningTotal() {
         return runningTotal;
     }
 
+    /**
+     * Returns the discount amount
+     *
+     * @return double
+     */
     public double getDiscountAmount() {
         return this.discount.getAmount() * 100;
     }
 
+    /**
+     * Returns the paid amount
+     *
+     * @return double
+     */
     public double getPaidAmount() {
         return paidAmount;
     }
 
+    /**
+     * Calculates the amount of change to be given
+     *
+     * @return double
+     */
     public double calculateChange() {
         return paidAmount - runningTotal;
     }

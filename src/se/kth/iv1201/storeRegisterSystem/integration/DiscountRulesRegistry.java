@@ -5,9 +5,11 @@ import se.kth.iv1201.storeRegisterSystem.model.CustomerDTO;
 import java.util.HashMap;
 
 public class DiscountRulesRegistry {
-
     private HashMap<Integer, Double> discountDatabase;
 
+    /**
+     * Creates new instance of DiscountRulesRegistry and initializes it with dummy data
+     */
     public DiscountRulesRegistry() {
         discountDatabase = new HashMap<>();
 
@@ -21,6 +23,12 @@ public class DiscountRulesRegistry {
         discountDatabase.put(1240, 0.1);
     }
 
+    /**
+     * Checks how much discount a customer is eligible for
+     *
+     * @param customer CustomerDTO
+     * @return double
+     */
     public double checkDiscountAmount(CustomerDTO customer) {
         int customerId = customer.getCustomerId();
         if (discountDatabase.get(customerId) != null) {

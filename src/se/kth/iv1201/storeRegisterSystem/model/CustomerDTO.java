@@ -9,6 +9,11 @@ public class CustomerDTO {
         this.customerId = customerId;
     }
 
+    /**
+     * Returns the customer id
+     *
+     * @return int
+     */
     public int getCustomerId() {
         return customerId;
     }

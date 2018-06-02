@@ -37,7 +37,7 @@ public class InventoryRegistry {
     }
 
     /**
-     * Removes the amount specified in "quantity" from the active stock of the item
+     * Updates the stock based on the items in the current Sale
      *
      * @param sale Sale
      * @return boolean

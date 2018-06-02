@@ -9,10 +9,20 @@ public class RegistryCreator {
         discountRulesRegistry = new DiscountRulesRegistry();
     }
 
+    /**
+     * Returns the inventoryRegistry instance
+     *
+     * @return InventoryRegistry
+     */
     public InventoryRegistry getInventoryRegistry() {
         return inventoryRegistry;
     }
 
+    /**
+     * Returns the discountRulesRegistry instance
+     *
+     * @return DiscountRulesRegistry
+     */
     public DiscountRulesRegistry getDiscountRulesRegistry() {
         return discountRulesRegistry;
     }
