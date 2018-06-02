@@ -1,9 +1,15 @@
-package model;
+package se.kth.iv1201.storeRegisterSystem.model;
 
-import integration.DiscountRulesRegistry;
+import se.kth.iv1201.storeRegisterSystem.integration.DiscountRulesRegistry;
 
 public class Discount {
-    private int amount;
+    private double amount;
 
-    public Discount(CustomerDTO customer, DiscountRulesRegistry rules) {}
+    public Discount(CustomerDTO customer, DiscountRulesRegistry rules) {
+        amount = rules.checkDiscountAmount(customer);
+    }
+
+    public double getAmount() {
+        return amount;
+    }
 }
