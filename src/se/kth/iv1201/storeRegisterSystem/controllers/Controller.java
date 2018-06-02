@@ -50,6 +50,16 @@ public class Controller {
     }
 
     /**
+     * Returns the stock of a given item. For testing only
+     *
+     * @param itemId
+     * @return int
+     */
+    public int getItemStock(int itemId) {
+        return inventoryRegistry.getStock(itemId);
+    }
+
+    /**
      * Returns the running total of the current sale
      *
      * @return double

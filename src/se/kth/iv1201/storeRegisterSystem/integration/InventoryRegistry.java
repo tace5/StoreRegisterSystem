@@ -37,6 +37,20 @@ public class InventoryRegistry {
     }
 
     /**
+     * Get the stock of a certain item. For testing only
+     *
+     * @param itemId
+     * @return int
+     */
+    public int getStock(int itemId) {
+        if (inventoryDatabase.get(itemId) != null) {
+            return this.inventoryDatabase.get(itemId).getStock();
+        }
+
+        return -1;
+    }
+
+    /**
      * Updates the stock based on the items in the current Sale
      *
      * @param sale Sale
