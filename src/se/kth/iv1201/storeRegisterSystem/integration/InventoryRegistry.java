@@ -1,5 +1,7 @@
 package se.kth.iv1201.storeRegisterSystem.integration;
 
+import se.kth.iv1201.storeRegisterSystem.exceptions.DatabaseFailureException;
+import se.kth.iv1201.storeRegisterSystem.exceptions.ItemNotFoundException;
 import se.kth.iv1201.storeRegisterSystem.model.ItemDTO;
 import se.kth.iv1201.storeRegisterSystem.model.Sale;
 
@@ -28,12 +30,14 @@ public class InventoryRegistry {
      * @param itemId int
      * @return ItemDTO
      */
-    public ItemDTO getItem(int itemId) {
+    public ItemDTO getItem(int itemId) throws ItemNotFoundException, DatabaseFailureException {
         if (inventoryDatabase.get(itemId) != null) {
             return this.inventoryDatabase.get(itemId).getItem();
+        } else if (itemId == 666) {
+            throw new DatabaseFailureException();
+        } else {
+            throw new ItemNotFoundException(itemId);
         }
-
-        return null;
     }
 
     /**
@@ -42,12 +46,14 @@ public class InventoryRegistry {
      * @param itemId
      * @return int
      */
-    public int getStock(int itemId) {
+    public int getStock(int itemId) throws ItemNotFoundException, DatabaseFailureException {
         if (inventoryDatabase.get(itemId) != null) {
             return this.inventoryDatabase.get(itemId).getStock();
+        } else if (itemId == 666) {
+            throw new DatabaseFailureException();
+        } else {
+            throw new ItemNotFoundException(itemId);
         }
-
-        return -1;
     }
 
     /**

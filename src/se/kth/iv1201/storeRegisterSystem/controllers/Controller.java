@@ -1,5 +1,8 @@
 package se.kth.iv1201.storeRegisterSystem.controllers;
 
+import se.kth.iv1201.storeRegisterSystem.exceptions.DatabaseFailureException;
+import se.kth.iv1201.storeRegisterSystem.exceptions.ItemNotFoundException;
+import se.kth.iv1201.storeRegisterSystem.exceptions.OperationFailedException;
 import se.kth.iv1201.storeRegisterSystem.integration.DiscountRulesRegistry;
 import se.kth.iv1201.storeRegisterSystem.integration.InventoryRegistry;
 import se.kth.iv1201.storeRegisterSystem.integration.Printer;
@@ -7,6 +10,7 @@ import se.kth.iv1201.storeRegisterSystem.integration.RegistryCreator;
 import se.kth.iv1201.storeRegisterSystem.model.CustomerDTO;
 import se.kth.iv1201.storeRegisterSystem.model.ItemDTO;
 import se.kth.iv1201.storeRegisterSystem.model.Sale;
+import se.kth.iv1201.storeRegisterSystem.model.SaleObserver;
 
 public class Controller {
     private Sale currentSale;
@@ -38,15 +42,15 @@ public class Controller {
      * @param quantity
      * @return ItemDTO
      */
-    public ItemDTO scanItem(int itemId, int quantity) {
-        ItemDTO item = inventoryRegistry.getItem(itemId);
-        if (item != null) {
-            System.out.println(item.getDescription());
+    public ItemDTO scanItem(int itemId, int quantity) throws OperationFailedException, ItemNotFoundException {
+        try {
+            ItemDTO item = inventoryRegistry.getItem(itemId);
             currentSale.addItem(item, quantity);
             currentSale.updateRunningTotal();
+            return item;
+        } catch (DatabaseFailureException ex) {
+            throw new OperationFailedException("Could not scan item.", ex);
         }
-
-        return item;
     }
 
     /**
@@ -55,8 +59,12 @@ public class Controller {
      * @param itemId
      * @return int
      */
-    public int getItemStock(int itemId) {
-        return inventoryRegistry.getStock(itemId);
+    public int getItemStock(int itemId) throws OperationFailedException, ItemNotFoundException {
+        try {
+            return inventoryRegistry.getStock(itemId);
+        } catch (DatabaseFailureException ex) {
+            throw new OperationFailedException("Could not get item stock", ex);
+        }
     }
 
     /**
@@ -99,5 +107,14 @@ public class Controller {
         currentSale.printReceipt(printer);
 
         return acceptPayment;
+    }
+
+    /**
+     * Adds an observer class to the current sale
+     *
+     * @param saleObserver SaleObserver
+     */
+    public void addSaleObserver(SaleObserver saleObserver) {
+        currentSale.addSaleObserver(saleObserver);
     }
 }

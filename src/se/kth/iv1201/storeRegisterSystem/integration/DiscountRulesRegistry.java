@@ -1,5 +1,6 @@
 package se.kth.iv1201.storeRegisterSystem.integration;
 
+import se.kth.iv1201.storeRegisterSystem.exceptions.DatabaseFailureException;
 import se.kth.iv1201.storeRegisterSystem.model.CustomerDTO;
 
 import java.util.HashMap;
@@ -29,10 +30,12 @@ public class DiscountRulesRegistry {
      * @param customer CustomerDTO
      * @return double
      */
-    public double checkDiscountAmount(CustomerDTO customer) {
+    public double checkDiscountAmount(CustomerDTO customer) throws DatabaseFailureException {
         int customerId = customer.getCustomerId();
         if (discountDatabase.get(customerId) != null) {
             return discountDatabase.get(customerId);
+        } else if (customerId == 666) {
+            throw new DatabaseFailureException();
         }
         
         return 0;
