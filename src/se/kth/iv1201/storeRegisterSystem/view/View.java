@@ -1,6 +1,7 @@
 package se.kth.iv1201.storeRegisterSystem.view;
 
 import se.kth.iv1201.storeRegisterSystem.controllers.Controller;
+import se.kth.iv1201.storeRegisterSystem.logger.Logger;
 import se.kth.iv1201.storeRegisterSystem.model.CustomerDTO;
 import se.kth.iv1201.storeRegisterSystem.model.ItemDTO;
 
@@ -8,9 +9,12 @@ import java.util.Scanner;
 
 public class View {
     private Controller controller;
+    private Logger logger;
     private Scanner scan = new Scanner(System.in);
 
     public View(Controller controller) {
+        this.logger = Logger.getLogger();
+        controller.addSaleObserver(new TotalRevenueView());
         this.controller = controller;
     }
 
@@ -29,12 +33,12 @@ public class View {
         int itemId = scan.nextInt();
         System.out.println("Quantity: ");
         int quantity = scan.nextInt();
-
-        ItemDTO item = controller.scanItem(itemId, quantity);
-        if (item == null) {
-            System.out.println("Item not found");
-        } else {
+        try {
+            ItemDTO item = controller.scanItem(itemId, quantity);
             displayItemInfo(item);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            logger.logException(ex);
         }
 
         displayRunningTotal();

@@ -3,7 +3,9 @@ package se.kth.iv1201.storeRegisterSystem.model;
 import se.kth.iv1201.storeRegisterSystem.integration.DiscountRulesRegistry;
 import se.kth.iv1201.storeRegisterSystem.integration.Printer;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Sale {
@@ -12,6 +14,7 @@ public class Sale {
     private double paidAmount = 0;
     private HashMap<ItemDTO, Integer> itemsList;
     private Discount discount;
+    private List<SaleObserver> saleObservers = new ArrayList<>();
 
     public Sale () {
         itemsList = new HashMap<>();
@@ -75,6 +78,25 @@ public class Sale {
         }
 
         runningTotal = updatedTotal;
+        updateView();
+    }
+
+    /**
+     * Updates the total revenue view with new totals
+     */
+    public void updateView() {
+        for (SaleObserver obs : saleObservers){
+            obs.updateTotals(this);
+        }
+    }
+
+    /**
+     * Adds a view to the observers of this class
+     *
+     * @param obs SaleObserver
+     */
+    public void addSaleObserver(SaleObserver obs){
+        saleObservers.add(obs);
     }
 
     /**
