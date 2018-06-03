@@ -10,7 +10,6 @@ import se.kth.iv1201.storeRegisterSystem.integration.RegistryCreator;
 import se.kth.iv1201.storeRegisterSystem.model.CustomerDTO;
 import se.kth.iv1201.storeRegisterSystem.model.ItemDTO;
 import se.kth.iv1201.storeRegisterSystem.model.Sale;
-import se.kth.iv1201.storeRegisterSystem.model.SaleObserver;
 import se.kth.iv1201.storeRegisterSystem.view.TotalRevenueView;
 
 public class Controller {
