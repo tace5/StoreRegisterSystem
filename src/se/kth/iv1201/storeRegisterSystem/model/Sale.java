@@ -1,5 +1,6 @@
 package se.kth.iv1201.storeRegisterSystem.model;
 
+import se.kth.iv1201.storeRegisterSystem.exceptions.DatabaseFailureException;
 import se.kth.iv1201.storeRegisterSystem.integration.DiscountRulesRegistry;
 import se.kth.iv1201.storeRegisterSystem.integration.Printer;
 
@@ -41,7 +42,7 @@ public class Sale {
      * @param customer CustomerDTO
      * @param rules DiscountRulesRegistry
      */
-    public void requestDiscount(CustomerDTO customer, DiscountRulesRegistry rules) {
+    public void requestDiscount(CustomerDTO customer, DiscountRulesRegistry rules) throws DatabaseFailureException {
         discount = new Discount(customer, rules);
     }
 

@@ -1,6 +1,7 @@
 package se.kth.iv1201.storeRegisterSystem.view;
 
 import se.kth.iv1201.storeRegisterSystem.controllers.Controller;
+import se.kth.iv1201.storeRegisterSystem.exceptions.OperationFailedException;
 import se.kth.iv1201.storeRegisterSystem.logger.Logger;
 import se.kth.iv1201.storeRegisterSystem.model.CustomerDTO;
 import se.kth.iv1201.storeRegisterSystem.model.ItemDTO;
@@ -14,7 +15,6 @@ public class View {
 
     public View(Controller controller) {
         this.logger = Logger.getLogger();
-        controller.addSaleObserver(new TotalRevenueView());
         this.controller = controller;
     }
 
@@ -92,7 +92,12 @@ public class View {
         if (discountRequested) {
             System.out.println("Customer identification: ");
             int customerId = scan.nextInt();
-            controller.requestDiscount(new CustomerDTO("", customerId));
+            try {
+                controller.requestDiscount(new CustomerDTO("", customerId));
+            } catch (OperationFailedException ex) {
+                ex.printStackTrace();
+                logger.logException(ex);
+            }
 
             displayRunningTotal();
         }

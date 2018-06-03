@@ -1,11 +1,12 @@
 package se.kth.iv1201.storeRegisterSystem.model;
 
+import se.kth.iv1201.storeRegisterSystem.exceptions.DatabaseFailureException;
 import se.kth.iv1201.storeRegisterSystem.integration.DiscountRulesRegistry;
 
 public class Discount {
     private double amount;
 
-    public Discount(CustomerDTO customer, DiscountRulesRegistry rules) {
+    public Discount(CustomerDTO customer, DiscountRulesRegistry rules) throws DatabaseFailureException {
         amount = rules.checkDiscountAmount(customer);
     }
 

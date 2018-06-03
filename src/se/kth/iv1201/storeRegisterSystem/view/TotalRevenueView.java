@@ -6,8 +6,10 @@ import se.kth.iv1201.storeRegisterSystem.model.SaleObserver;
 import java.util.HashMap;
 import java.util.Map;
 
-class TotalRevenueView implements SaleObserver {
+public class TotalRevenueView implements SaleObserver {
     private Map<Sale, Double> saleTotals = new HashMap<>();
+
+    public TotalRevenueView() {}
 
     @Override
     public void updateTotals(Sale sale) {

@@ -11,6 +11,7 @@ import se.kth.iv1201.storeRegisterSystem.model.CustomerDTO;
 import se.kth.iv1201.storeRegisterSystem.model.ItemDTO;
 import se.kth.iv1201.storeRegisterSystem.model.Sale;
 import se.kth.iv1201.storeRegisterSystem.model.SaleObserver;
+import se.kth.iv1201.storeRegisterSystem.view.TotalRevenueView;
 
 public class Controller {
     private Sale currentSale;
@@ -33,6 +34,7 @@ public class Controller {
      */
     public void startSale() {
         currentSale = new Sale();
+        currentSale.addSaleObserver(new TotalRevenueView());
     }
 
     /**
@@ -90,8 +92,12 @@ public class Controller {
      *
      * @param customer CustomerDTO
      */
-    public void requestDiscount(CustomerDTO customer) {
-        currentSale.requestDiscount(customer, discountRulesRegistry);
+    public void requestDiscount(CustomerDTO customer) throws OperationFailedException {
+        try {
+            currentSale.requestDiscount(customer, discountRulesRegistry);
+        } catch (DatabaseFailureException ex) {
+            throw new OperationFailedException("Failed to add discount.", ex.getCause());
+        }
         currentSale.updateRunningTotal();
     }
 
@@ -107,14 +113,5 @@ public class Controller {
         currentSale.printReceipt(printer);
 
         return acceptPayment;
-    }
-
-    /**
-     * Adds an observer class to the current sale
-     *
-     * @param saleObserver SaleObserver
-     */
-    public void addSaleObserver(SaleObserver saleObserver) {
-        currentSale.addSaleObserver(saleObserver);
     }
 }
