@@ -10,12 +10,14 @@ import se.kth.iv1201.storeRegisterSystem.integration.Printer;
 import se.kth.iv1201.storeRegisterSystem.integration.RegistryCreator;
 import se.kth.iv1201.storeRegisterSystem.model.CustomerDTO;
 import se.kth.iv1201.storeRegisterSystem.model.ItemDTO;
+import se.kth.iv1201.storeRegisterSystem.view.TotalRevenueView;
 
 public class ControllerTest {
     private Printer printer;
     private DiscountRulesRegistry discountRulesRegistry;
     private InventoryRegistry inventoryRegistry;
     private Controller controller;
+    private TotalRevenueView totalRevenueView;
 
     @Before
     public void setUp() throws Exception {
@@ -23,7 +25,8 @@ public class ControllerTest {
         RegistryCreator regCreator = new RegistryCreator();
         discountRulesRegistry = regCreator.getDiscountRulesRegistry();
         inventoryRegistry = regCreator.getInventoryRegistry();
-        controller = new Controller(printer, regCreator);
+        totalRevenueView = new TotalRevenueView();
+        controller = new Controller(printer, regCreator, totalRevenueView);
         controller.startSale();
     }
 

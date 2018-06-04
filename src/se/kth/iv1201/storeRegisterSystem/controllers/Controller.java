@@ -17,15 +17,17 @@ public class Controller {
     private Printer printer;
     private InventoryRegistry inventoryRegistry;
     private DiscountRulesRegistry discountRulesRegistry;
+    private TotalRevenueView totalRevenueView;
 
     /**
      * @param printer Printer
      * @param regCreator RegistryCreator
      */
-    public Controller(Printer printer, RegistryCreator regCreator) {
+    public Controller(Printer printer, RegistryCreator regCreator, TotalRevenueView totalRevenueView) {
         this.printer = printer;
         this.inventoryRegistry = regCreator.getInventoryRegistry();
         this.discountRulesRegistry = regCreator.getDiscountRulesRegistry();
+        this.totalRevenueView = totalRevenueView;
     }
 
     /**
@@ -33,7 +35,7 @@ public class Controller {
      */
     public void startSale() {
         currentSale = new Sale();
-        currentSale.addSaleObserver(new TotalRevenueView());
+        currentSale.addSaleObserver(this.totalRevenueView);
     }
 
     /**

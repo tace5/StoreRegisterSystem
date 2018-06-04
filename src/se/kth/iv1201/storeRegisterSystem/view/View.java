@@ -14,16 +14,16 @@ public class View {
     private Scanner scan = new Scanner(System.in);
 
     public View(Controller controller) {
-        this.logger = Logger.getLogger();
+        this.logger = new Logger();
         this.controller = controller;
     }
 
-    public void displayItemInfo(ItemDTO item) {
+    private void displayItemInfo(ItemDTO item) {
         System.out.println("Description: " + item.getDescription());
         System.out.println("Price: " + item.getPrice());
     }
 
-    public void displayRunningTotal() {
+    private void displayRunningTotal() {
         double runningTotal = controller.getRunningTotal();
         System.out.println("Running total: " + runningTotal);
     }
@@ -68,7 +68,7 @@ public class View {
         }
     }
 
-    public void POSloop() {
+    private void POSloop() {
         boolean itemsLeft = true;
 
         controller.startSale();

@@ -134,7 +134,10 @@ public class Sale {
      * @return double
      */
     public double getDiscountAmount() {
-        return this.discount.getAmount() * 100;
+        if (this.discount != null)
+            return this.discount.getAmount() * 100;
+        else
+            return 0;
     }
 
     /**
