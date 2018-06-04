@@ -64,7 +64,7 @@ public class View {
                 POSloop();
             }
             System.out.println("Start new sale (y/n): ");
-            startSale = scan.nextLine().equals("y");
+            startSale = scan.next().equals("y");
         }
     }
 
